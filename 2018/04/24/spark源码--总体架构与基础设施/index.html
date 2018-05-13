@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="十年饮冰，难凉热血">
+<meta name="description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="spark源码—--总体架构与基础设施">
 <meta property="og:url" content="http://yoursite.com/2018/04/24/spark源码--总体架构与基础设施/index.html">
 <meta property="og:site_name" content="一座城池">
-<meta property="og:description" content="十年饮冰，难凉热血">
+<meta property="og:description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-24T04:51:50.996Z">
+<meta property="og:updated_time" content="2018-05-13T15:16:17.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spark源码—--总体架构与基础设施">
-<meta name="twitter:description" content="十年饮冰，难凉热血">
+<meta name="twitter:description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
 
 
 
@@ -321,7 +321,13 @@
       
 
       
-        
+        <h2 id="spark基本概念"><a href="#spark基本概念" class="headerlink" title="spark基本概念"></a>spark基本概念</h2><ol>
+<li>RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。</li>
+<li>DAG(Directed Acycle graph):有向无环图。在图论中，如果一个有向图无法从某个顶点出发经过若干条边回到该点，则这个图是一个有向无环图。Spark使用DAG来反应各RDD之间的依赖或血源关系。</li>
+<li>Partition:数据分区，即一个RDD的数据可以划分为多少个分区。Spark根据Partition的数量来确定Task任务。</li>
+<li>NarrowDependency:窄依赖，即子RDD依赖于父RDD中固定的Partition。NarrowDependency分为OneToOneDependency和RangeDependency。</li>
+</ol>
+
       
     </div>
     
@@ -405,8 +411,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -457,6 +472,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark基本概念"><span class="nav-number">1.</span> <span class="nav-text">spark基本概念</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
