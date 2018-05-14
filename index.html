@@ -251,7 +251,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/24/spark源码--总体架构与基础设施/" itemprop="url">spark源码(0)|总体架构与基础设施</a></h1>
+                <a class="post-title-link" href="/2018/04/24/spark源码--总体架构与基础设施/" itemprop="url">spark源码|总体架构与基础设施</a></h1>
         
 
         <div class="post-meta">
@@ -325,10 +325,13 @@
       
         
           
-          spark基本概念
+          
+spark版本：2.2JDK：1.8scala:2.11.8
+
+一.spark基本概念
 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。
 DAG(Directed Acycle graph):有向无环图。在图论中，如果一个有向图无法从某个顶点出发经过若干条边回到该点，则这个图是一个有向无环图。Spark使用DAG来反应各RDD之间的依赖或血源关系。
-Partition:数据分区，即一个RDD的数据可以划分为多少个分区。Spark根据Partit
+Partition:数据分
           ...
           <!--noindex-->
           <div class="post-button text-center">

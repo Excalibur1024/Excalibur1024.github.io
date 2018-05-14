@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
+<meta name="description" content="spark版本：2.2JDK：1.8scala:2.11.8  一.spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spark源码(0)|总体架构与基础设施">
+<meta property="og:title" content="spark源码|总体架构与基础设施">
 <meta property="og:url" content="http://yoursite.com/2018/04/24/spark源码--总体架构与基础设施/index.html">
 <meta property="og:site_name" content="一座城池">
-<meta property="og:description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
+<meta property="og:description" content="spark版本：2.2JDK：1.8scala:2.11.8  一.spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fra5e7t145j30l60bo75k.jpg">
-<meta property="og:updated_time" content="2018-05-13T15:52:23.338Z">
+<meta property="og:updated_time" content="2018-05-14T03:27:45.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="spark源码(0)|总体架构与基础设施">
-<meta name="twitter:description" content="spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。 DAG(D">
+<meta name="twitter:title" content="spark源码|总体架构与基础设施">
+<meta name="twitter:description" content="spark版本：2.2JDK：1.8scala:2.11.8  一.spark基本概念 RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到DAGScheduler。RDD的祖先">
 <meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1fra5e7t145j30l60bo75k.jpg">
 
 
@@ -127,7 +127,7 @@
 
 
 
-  <title>spark源码(0)|总体架构与基础设施 | 一座城池</title>
+  <title>spark源码|总体架构与基础设施 | 一座城池</title>
   
 
 
@@ -251,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">spark源码(0)|总体架构与基础设施</h1>
+          <h1 class="post-title" itemprop="name headline">spark源码|总体架构与基础设施</h1>
         
 
         <div class="post-meta">
@@ -323,7 +323,10 @@
       
 
       
-        <h2 id="spark基本概念"><a href="#spark基本概念" class="headerlink" title="spark基本概念"></a>spark基本概念</h2><ol>
+        <blockquote>
+<p>spark版本：2.2<br>JDK：1.8<br>scala:2.11.8</p>
+</blockquote>
+<h2 id="一-spark基本概念"><a href="#一-spark基本概念" class="headerlink" title="一.spark基本概念"></a>一.spark基本概念</h2><ol>
 <li>RDD(resillient distributed dataset):弹性分布式数据集。Spark应用程序通过使用Spark的转换API，可以将RDD封装为一系列具有血源关系的RDD，也就是DAG(有向无环图)。只有通过Spark的动作API才会将RDD及其DAG提交到<code>DAGScheduler</code>。RDD的祖先一定是一个跟数据源相关的RDD，负责从数据源迭代读取数据。</li>
 <li>DAG(Directed Acycle graph):<strong>有向无环图</strong>。在图论中，如果一个有向图无法从某个顶点出发经过若干条边回到该点，则这个图是一个有向无环图。Spark使用DAG来反应各RDD之间的依赖或血源关系。</li>
 <li>Partition:数据分区，即一个RDD的数据可以划分为多少个分区。Spark根据<code>Partition</code>的数量来确定Task任务。</li>
@@ -332,9 +335,18 @@
 <li>Job:用户提交的作业。当RDD及其DAG被提交给DAGScheduler调度后，DAGScheduler会将所有RDD中的转换及动作视为一个Job。一个Job由一到多个Task组成。</li>
 <li>Stage:Job的执行阶段。<code>DAGScheduler</code>按照<code>ShuffleDependency</code>作为Stage的划分节点对RDD的DAG进行Stage划分(上游的Stage将为<code>ShuffleMapStage</code>)。以此一个Job可能被划分为一到多个Stage。Stage分为<code>ShuffleMapStage</code>和<code>ResultStage</code>两种。</li>
 <li>Task:具体执行的任务。一个Job在每个Stage内都会按照RDD的Partition数量，创建多个Task。Task分为<code>ShuffleMapTask</code>和<code>ResultTask</code>两种。ShuffleMapStage中的Task为ShuffleMapTask,而ResultStage中的Task为ResultTask。ShuffleMapTask和ResultTask类似于Hadoop中的Map任务和Reduce任务。</li>
-<li>Shuffle:<code>Shuffle</code>是所有MapReduce计算框架的核心阶段。Shuffle用于打通map任务(在Spark中就是ShuffleMapTask)的输出与Reduce任务(在Spark中是ResultTask)的输入。map任务的中间输出结果按照指定的分区策略，例如按照key的值哈希，分配给处理某一个分区的reduce任务。<h2 id="spark功能模块"><a href="#spark功能模块" class="headerlink" title="spark功能模块"></a>spark功能模块</h2><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fra5e7t145j30l60bo75k.jpg" alt=""></li>
+<li>Shuffle:<code>Shuffle</code>是所有MapReduce计算框架的核心阶段。Shuffle用于打通map任务(在Spark中就是ShuffleMapTask)的输出与Reduce任务(在Spark中是ResultTask)的输入。map任务的中间输出结果按照指定的分区策略，例如按照key的值哈希，分配给处理某一个分区的reduce任务。</li>
 </ol>
-
+<hr>
+<h2 id="二-spark功能模块"><a href="#二-spark功能模块" class="headerlink" title="二.spark功能模块"></a>二.spark功能模块</h2><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1fra5e7t145j30l60bo75k.jpg" alt=""></p>
+<h3 id="1-Spark-Core"><a href="#1-Spark-Core" class="headerlink" title="1.Spark Core"></a>1.Spark Core</h3><h4 id="1-基础设施"><a href="#1-基础设施" class="headerlink" title="(1).基础设施"></a>(1).基础设施</h4><ul>
+<li>SparkConf:</li>
+<li>SparkContext:</li>
+<li>SparkEnv:</li>
+<li>ListenerBus:事件总线</li>
+<li>内置RPC框架:早期Spark版本中使用的Akka,新版本中使用Netty实现。跨机器节点的组件通信都依赖于此框架。</li>
+</ul>
+<h4 id="2-存储系统"><a href="#2-存储系统" class="headerlink" title="(2).存储系统"></a>(2).存储系统</h4><h4 id="3-调度系统"><a href="#3-调度系统" class="headerlink" title="(3).调度系统"></a>(3).调度系统</h4><h4 id="4-计算引擎"><a href="#4-计算引擎" class="headerlink" title="(4).计算引擎"></a>(4).计算引擎</h4><h4 id="5-部署系统"><a href="#5-部署系统" class="headerlink" title="(5).部署系统"></a>(5).部署系统</h4><h3 id="2-Spark-SQL"><a href="#2-Spark-SQL" class="headerlink" title="2.Spark SQL"></a>2.Spark SQL</h3><h3 id="3-Spark-Streaming"><a href="#3-Spark-Streaming" class="headerlink" title="3.Spark Streaming"></a>3.Spark Streaming</h3><h3 id="4-GraphX"><a href="#4-GraphX" class="headerlink" title="4.GraphX"></a>4.GraphX</h3><h3 id="5-MLlib"><a href="#5-MLlib" class="headerlink" title="5.MLlib"></a>5.MLlib</h3>
       
     </div>
     
@@ -489,7 +501,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark基本概念"><span class="nav-number">1.</span> <span class="nav-text">spark基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark功能模块"><span class="nav-number">2.</span> <span class="nav-text">spark功能模块</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-spark基本概念"><span class="nav-number">1.</span> <span class="nav-text">一.spark基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-spark功能模块"><span class="nav-number">2.</span> <span class="nav-text">二.spark功能模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Spark-Core"><span class="nav-number">2.1.</span> <span class="nav-text">1.Spark Core</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基础设施"><span class="nav-number">2.1.1.</span> <span class="nav-text">(1).基础设施</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-存储系统"><span class="nav-number">2.1.2.</span> <span class="nav-text">(2).存储系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-调度系统"><span class="nav-number">2.1.3.</span> <span class="nav-text">(3).调度系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-计算引擎"><span class="nav-number">2.1.4.</span> <span class="nav-text">(4).计算引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-部署系统"><span class="nav-number">2.1.5.</span> <span class="nav-text">(5).部署系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Spark-SQL"><span class="nav-number">2.2.</span> <span class="nav-text">2.Spark SQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Spark-Streaming"><span class="nav-number">2.3.</span> <span class="nav-text">3.Spark Streaming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-GraphX"><span class="nav-number">2.4.</span> <span class="nav-text">4.GraphX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-MLlib"><span class="nav-number">2.5.</span> <span class="nav-text">5.MLlib</span></a></li></ol></li></ol></div>
             
 
           </div>
