@@ -87,7 +87,8 @@
 <meta property="og:description" content="1.spark编程模型先看图吧 Spark应用程序从编写到提交，执行，输出的整个过程如上图所示，其步骤如下：  用户使用SparkContext提供的API编写Driver应用程序。此外，SparkSession,DataFrame,SQLContext,HiveContext及StreamingContext都对SparkContext进行了封装，并提供了DataFrame,SQL,HIVE及流">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcly1frc0o9byarj31kw12kjxf.jpg">
-<meta property="og:updated_time" content="2018-05-15T07:00:53.130Z">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1frc1jvfes4j30n20cijsp.jpg">
+<meta property="og:updated_time" content="2018-05-15T07:10:20.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="spark模型设计">
 <meta name="twitter:description" content="1.spark编程模型先看图吧 Spark应用程序从编写到提交，执行，输出的整个过程如上图所示，其步骤如下：  用户使用SparkContext提供的API编写Driver应用程序。此外，SparkSession,DataFrame,SQLContext,HiveContext及StreamingContext都对SparkContext进行了封装，并提供了DataFrame,SQL,HIVE及流">
@@ -331,6 +332,8 @@
 <li>集群管理器(Cluster Manager)会根据应用的需求，给应用分配资源，即将具体任务分配到不同的<strong>Worker</strong>节点上的多个<strong>Executor</strong>来处理任务的运行。Standalone,YARN,Mesos,EX2等都可以作为Spark的集群管理器。</li>
 <li>Task在运行的过程中需要对一些数据（如中间结果，检查点）进行持久化，Spark支持选择HDFS,Amazon S3，Alluxio等作为存储。</li>
 </ol>
+<hr>
+<h2 id="2-RDD计算模型"><a href="#2-RDD计算模型" class="headerlink" title="2.RDD计算模型"></a>2.RDD计算模型</h2><p>还是先开图吧，这张图在网上找的，感觉画的很不错，就不自己再画一遍了。<br><img src="https://ws1.sinaimg.cn/large/006tKfTcly1frc1jvfes4j30n20cijsp.jpg" alt=""></p>
 
       
     </div>
@@ -486,7 +489,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-spark编程模型"><span class="nav-number">1.</span> <span class="nav-text">1.spark编程模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-spark编程模型"><span class="nav-number">1.</span> <span class="nav-text">1.spark编程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RDD计算模型"><span class="nav-number">2.</span> <span class="nav-text">2.RDD计算模型</span></a></li></ol></div>
             
 
           </div>
